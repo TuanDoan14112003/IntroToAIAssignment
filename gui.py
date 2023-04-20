@@ -38,7 +38,7 @@ class GUI(Tk):
         self.clearMaze()
 
         if self.environment:
-            self.squareSize = min(1280/self.environment.column,900/self.environment.row) / 2  # calculate the good size here
+            self.squareSize = int(min(1280/self.environment.column,900/self.environment.row) / 2)  # calculate the good size here
             self.mazeCanvas = Canvas(self, bg='white', width=self.squareSize * self.environment.column + 1,
                                      height=self.squareSize * self.environment.row + 1,
                                      borderwidth=0, highlightthickness=0, name="maze")
