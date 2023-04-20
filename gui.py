@@ -20,7 +20,7 @@ class GUI(Tk):
         self.configure(bg='white')
         self.title("Search Algorithm Visualizer by Anh Tuan Doan")
         self.mazeCanvas = None
-        self.font = ("calibre",10)
+        self.font = ("calibre",15)
         self.filename = None
         self.environment = None
         self.robot = None
@@ -105,11 +105,11 @@ class HomepageFrame(Frame):
         self.controller = controller
         Label(controller, text="Search Algorithm Visualizer", fg='black', bg='white', font=("calibre", 30)).place(x=450,
                                                                                                                   y=0)
-        Label(controller, text="by Anh Tuan Doan", fg='black', bg='white', font=("calibre", 15)).place(x=650, y=40)
+        Label(controller, text="by Anh Tuan Doan", fg='black', bg='white', font=("calibre", 15)).place(x=650, y=60)
         Button(controller, text='Create Maze', command=self.createMaze, bg='white', fg='black',
-               highlightbackground='white', height=2, width=15, font=self.controller.font).place(x=430, y=80)
+               highlightbackground='white', height=2, width=15, font=self.controller.font).place(x=430, y=120)
         Button(controller, text='Import Maze', command=self.importMaze, bg='white', fg='black',
-               highlightbackground='white', height=2, width=15,  font=self.controller.font).place(x=650, y=80)
+               highlightbackground='white', height=2, width=15,  font=self.controller.font).place(x=650, y=120)
 
     def importMaze(self):
         self.controller.switchFrame(ImportFrame)
