@@ -246,10 +246,10 @@ class SelectMazeSizeFrame(Frame):
               font=self.controller.font).place(x=40, y=20)
         Label(controller, text="Row", fg='black', bg='white', font=self.controller.font).place(x=40, y=60)
         Entry(controller, textvariable=self.rowVar, fg='black', insertbackground='black',
-              bg='white').place(x=120, y=60)
+              bg='white',font = self.controller.font).place(x=120, y=60)
         Label(controller, text="Column", fg='black', bg='white', font=self.controller.font).place(x=40, y=100)
         Entry(controller, textvariable=self.columnVar, fg='black', insertbackground='black',
-              bg='white').place(x=120, y=100)
+              bg='white',font = self.controller.font).place(x=120, y=100)
         Button(controller, text='Confirm Size', command=self.confirmSize, bg='white', fg='black',
                highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=40, y=150)
 
@@ -291,7 +291,7 @@ class SelectGoalsFrame(Frame):
               text="Select multiple goals by clicking on the squares in the maze. You can also click on a selected square to remove it",
               fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Confirm goals', command=self.confirmGoals, bg='white', fg='black',
-               highlightbackground='white', height=2, width=15).place(x=40, y=60)
+               highlightbackground='white', height=2, width=15,font=self.controller.font).place(x=40, y=60)
 
     def selectGoals(self, event):
         if str(event.widget) == ".maze":
