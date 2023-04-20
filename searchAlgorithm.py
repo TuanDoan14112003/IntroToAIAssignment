@@ -19,8 +19,10 @@ class SearchAlgorithm(ABC):
             return ""
         else:
             parentPath = self.getDirection(node.parent)
-            seperator = ";" if parentPath != "" else ""
+            seperator = "; " if parentPath != "" else ""
             return parentPath + seperator + node.direction
+
+
 
     def getPath(self, node):
         if node is None:

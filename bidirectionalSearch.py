@@ -12,6 +12,7 @@ class BidirectionalSearch(SearchAlgorithm):
         self.desParent = [[None for i in range(self.environment.column)] for j in range(self.environment.row)]
         self.srcFrontier = Queue()
         self.desFrontier = Queue()
+
     def getIntersectingNode(self):
         for i in range(self.environment.row):
             for j in range(self.environment.column):
@@ -50,7 +51,7 @@ class BidirectionalSearch(SearchAlgorithm):
             yield {"finish": True,"success": True, "path" : self.getPath(intersection), "direction" : self.getDirection(intersection), "numberOfNodes":len(self.getPath(intersection)) -1 }
             return
         else:
-            yield {"finish": True,"success": False, "message": "No solution"}
+            yield {"finish": True,"success": False, "message": "No solution found"}
             return
 
 

@@ -46,6 +46,6 @@ class Robot:
         elif method == "CUS2":
             self.searchMethod = IterativeDeepeningAStarSearch(self.environment)
         else:
-            raise "There is no such search"
+            raise Exception("There is no such method. The appropriate methods are BFS, DFS, GBFS, AS, CUS1, CUS2 ")
         return self.searchMethod.search()
 

@@ -8,14 +8,17 @@ def main():
         filename = sys.argv[1]
         method = sys.argv[2]
         robot = Robot(filename)
-        generator = robot.solve(method)
-        for result in generator:
-            pass
-        if result["success"]:
-            print(filename,method,result["numberOfNodes"])
-            print(result["direction"])
-        else:
-            print(result["message"])
+        try:
+            generator = robot.solve(method)
+            for result in generator:
+                pass
+            if result["success"]:
+                print(filename,method,result["numberOfNodes"])
+                print(result["direction"])
+            else:
+                print(result["message"])
+        except Exception as e:
+            print(e)
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

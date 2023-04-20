@@ -33,7 +33,7 @@ class AStarSearch(InformedSearch):
             yield {"finish": True,"success": True, "path": self.getPath(node), "direction" : self.getDirection(node), "numberOfNodes": node.cost}
             return
         else:
-            yield {"finish": True,"success": False, "message": "No solution"}
+            yield {"finish": True,"success": False, "message": "No solution found"}
             return
 
     def expand(self, node):

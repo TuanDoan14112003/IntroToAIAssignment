@@ -24,7 +24,7 @@ class DepthFirstSearch(SearchAlgorithm):
             yield {"finish": True, "success": True, "direction":self.getDirection(node), "path": self.getPath(node), "numberOfNodes": node.cost}
             return
         else:
-            yield {"finish": True,"success": False, "message": "No solution"}
+            yield {"finish": True,"success": False, "message": "No solution found"}
             return
 
     def expand(self, node):

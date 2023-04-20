@@ -21,11 +21,12 @@ class BreadthFirstSearch(SearchAlgorithm):
                 break
             yield {"finish": False, "success": False, "visited": self.visited, "frontier": [node.location for node in self.frontier.queue]}
             self.expand(node)
+
         if success:
             yield {"finish": True, "success": True, "direction":self.getDirection(node), "path": self.getPath(node), "numberOfNodes": node.cost}
             return
         else:
-            yield {"finish": True, "success": False, "message": "No solution"}
+            yield {"finish": True, "success": False, "message": "No solution found"}
             return
 
     def expand(self, node):
