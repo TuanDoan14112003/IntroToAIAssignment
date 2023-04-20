@@ -38,7 +38,7 @@ class GUI(Tk):
         self.clearMaze()
 
         if self.environment:
-            self.squareSize = 50  # calculate the good size here
+            self.squareSize = min(1280/self.environment.column,900/self.environment.row) / 2  # calculate the good size here
             self.mazeCanvas = Canvas(self, bg='white', width=self.squareSize * self.environment.column + 1,
                                      height=self.squareSize * self.environment.row + 1,
                                      borderwidth=0, highlightthickness=0, name="maze")
@@ -185,22 +185,22 @@ class SearchFrame(Frame):
                                        borderwidth=0, highlightthickness=0, name="legend")
             legendFont = ("calibre", 15)
             Label(self.legendCanvas, text="Start: ", fg='black',bg='white', font=legendFont).place(x=0,y=12)
-            self.legendCanvas.create_rectangle(50, 0, 50 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(70, 0, 70 + self.controller.squareSize, 0 + self.controller.squareSize,
                                                fill="red")
             Label(self.legendCanvas, text="Goal: ", fg='black', bg='white',font=legendFont).place(x=150,y=12)
-            self.legendCanvas.create_rectangle(200, 0, 200 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(220, 0, 220 + self.controller.squareSize, 0 + self.controller.squareSize,
                                                fill="green")
             Label(self.legendCanvas, text="Wall: ", fg='black', bg='white', font=legendFont).place(x=300,y=12)
-            self.legendCanvas.create_rectangle(350, 0, 350 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(370, 0, 370 + self.controller.squareSize, 0 + self.controller.squareSize,
                                                fill="black")
             Label(self.legendCanvas, text="Visited: ", fg='black', bg='white', font=legendFont).place(x=430,y=12)
-            self.legendCanvas.create_rectangle(500, 0, 500 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(520, 0, 520 + self.controller.squareSize, 0 + self.controller.squareSize,
                                                fill="blue")
             Label(self.legendCanvas, text="Path: ", fg='black', bg='white', font=legendFont).place(x=600,y=12)
-            self.legendCanvas.create_rectangle(650, 0, 650 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(670, 0, 670 + self.controller.squareSize, 0 + self.controller.squareSize,
                                                fill="yellow")
             Label(self.legendCanvas, text="Frontier: ", fg='black', bg='white', font=legendFont).place(x=730,y=12)
-            self.legendCanvas.create_rectangle(800, 0, 800 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(820, 0, 820 + self.controller.squareSize, 0 + self.controller.squareSize,
                                                fill="lightblue")
 
             self.legendCanvas.place(x=40, y=140)
