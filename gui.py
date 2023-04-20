@@ -185,19 +185,19 @@ class SearchFrame(Frame):
                                        borderwidth=0, highlightthickness=0, name="legend")
             legendFont = ("calibre", 15)
             Label(self.legendCanvas, text="Start: ", fg='black',bg='white', font=legendFont).place(x=0,y=12)
-            self.legendCanvas.create_rectangle(70, 0, 70 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(70, 0, 70 + 30, 0 + 30,
                                                fill="red")
             Label(self.legendCanvas, text="Goal: ", fg='black', bg='white',font=legendFont).place(x=150,y=12)
-            self.legendCanvas.create_rectangle(220, 0, 220 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(220, 0, 220 + 30, 0 + 30,
                                                fill="green")
             Label(self.legendCanvas, text="Wall: ", fg='black', bg='white', font=legendFont).place(x=300,y=12)
-            self.legendCanvas.create_rectangle(370, 0, 370 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(370, 0, 370 + 30, 0 +30,
                                                fill="black")
             Label(self.legendCanvas, text="Visited: ", fg='black', bg='white', font=legendFont).place(x=430,y=12)
-            self.legendCanvas.create_rectangle(520, 0, 520 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(520, 0, 520 + 30, 0 + 30,
                                                fill="blue")
             Label(self.legendCanvas, text="Path: ", fg='black', bg='white', font=legendFont).place(x=600,y=12)
-            self.legendCanvas.create_rectangle(670, 0, 670 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(670, 0, 670 + 30, 0 + 30,
                                                fill="yellow")
             Label(self.legendCanvas, text="Frontier: ", fg='black', bg='white', font=legendFont).place(x=730,y=12)
             self.legendCanvas.create_rectangle(820, 0, 820 + self.controller.squareSize, 0 + self.controller.squareSize,
