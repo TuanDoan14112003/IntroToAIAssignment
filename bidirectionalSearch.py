@@ -79,15 +79,17 @@ class BidirectionalSearch(SearchAlgorithm):
             location = path[i]
             nextLocation = path[i + 1]
             if location[0] == nextLocation[0] and location[1] == nextLocation[1] - 1:
-                direction += "down; "
+                direction += "down"
             elif location[0] == nextLocation[0] and location[1] == nextLocation[1] + 1:
-                direction += "up; "
+                direction += "up"
             elif location[1] == nextLocation[1] and location[0] == nextLocation[0] + 1:
-                direction += "left; "
+                direction += "left"
             elif location[1] == nextLocation[1] and location[0] == nextLocation[0] - 1:
-                direction += "right; "
+                direction += "right"
             else:
                 raise Exception("Cannot calculate the direction to the next move")
+            if i != len(path) - 2:
+                direction += "; "
         return direction
 
     def expand(self, node, direction):

@@ -14,7 +14,7 @@ def main():
                 pass
             if result["success"]:
                 print(filename,method,result["numberOfNodes"])
-                print(result["direction"])
+                print(result["direction"] + ";")
             else:
                 print(result["message"])
         except Exception as e:
