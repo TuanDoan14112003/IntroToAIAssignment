@@ -107,9 +107,9 @@ class HomepageFrame(Frame):
                                                                                                                   y=0)
         Label(controller, text="by Anh Tuan Doan", fg='black', bg='white', font=("calibre", 15)).place(x=650, y=40)
         Button(controller, text='Create Maze', command=self.createMaze, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10, font=self.controller.font).place(x=430, y=80)
+               highlightbackground='white', height=2, width=15, font=self.controller.font).place(x=430, y=80)
         Button(controller, text='Import Maze', command=self.importMaze, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=650, y=80)
+               highlightbackground='white', height=2, width=15,  font=self.controller.font).place(x=650, y=80)
 
     def importMaze(self):
         self.controller.switchFrame(ImportFrame)
@@ -127,7 +127,7 @@ class ImportFrame(Frame):
         Label(controller, text="The maze has been imported, click on the search button to find the solution",
               fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Search', command=self.goSearchFrame, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=40, y=60)
+               highlightbackground='white', height=2, width=15,  font=self.controller.font).place(x=40, y=60)
 
     def importEnvironment(self):
         filename = askopenfilename()
@@ -184,22 +184,22 @@ class SearchFrame(Frame):
             self.legendCanvas = Canvas(controller, bg='white', width=1000, height=100,
                                        borderwidth=0, highlightthickness=0, name="legend")
             legendFont = ("calibre", 15)
-            Label(self.legendCanvas, text="Start: ", fg='black',bg='white', font=legendFont).place(x=0,y=12)
+            Label(self.legendCanvas, text="Start: ", fg='black',bg='white', font=legendFont).place(x=0,y=8)
             self.legendCanvas.create_rectangle(70, 0, 70 + 30, 0 + 30,
                                                fill="red")
-            Label(self.legendCanvas, text="Goal: ", fg='black', bg='white',font=legendFont).place(x=150,y=12)
+            Label(self.legendCanvas, text="Goal: ", fg='black', bg='white',font=legendFont).place(x=150,y=8)
             self.legendCanvas.create_rectangle(220, 0, 220 + 30, 0 + 30,
                                                fill="green")
-            Label(self.legendCanvas, text="Wall: ", fg='black', bg='white', font=legendFont).place(x=300,y=12)
+            Label(self.legendCanvas, text="Wall: ", fg='black', bg='white', font=legendFont).place(x=300,y=8)
             self.legendCanvas.create_rectangle(370, 0, 370 + 30, 0 +30,
                                                fill="black")
-            Label(self.legendCanvas, text="Visited: ", fg='black', bg='white', font=legendFont).place(x=430,y=12)
+            Label(self.legendCanvas, text="Visited: ", fg='black', bg='white', font=legendFont).place(x=430,y=8)
             self.legendCanvas.create_rectangle(520, 0, 520 + 30, 0 + 30,
                                                fill="blue")
-            Label(self.legendCanvas, text="Path: ", fg='black', bg='white', font=legendFont).place(x=600,y=12)
+            Label(self.legendCanvas, text="Path: ", fg='black', bg='white', font=legendFont).place(x=600,y=8)
             self.legendCanvas.create_rectangle(670, 0, 670 + 30, 0 + 30,
                                                fill="yellow")
-            Label(self.legendCanvas, text="Frontier: ", fg='black', bg='white', font=legendFont).place(x=730,y=12)
+            Label(self.legendCanvas, text="Frontier: ", fg='black', bg='white', font=legendFont).place(x=730,y=8)
             self.legendCanvas.create_rectangle(820, 0, 820 + 30, 0 + 30,
                                                fill="lightblue")
 
@@ -268,7 +268,7 @@ class SelectStartPointFrame(Frame):
         Label(controller, text="Select start point by clicking on a square in the maze", fg='black', bg='white',
               font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Confirm start point', command=self.confirmStartPoint, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=40, y=60)
+               highlightbackground='white', height=2, width=15,  font=self.controller.font).place(x=40, y=60)
 
     def selectStartPoint(self, event):
         if str(event.widget) == ".maze":
@@ -291,7 +291,7 @@ class SelectGoalsFrame(Frame):
               text="Select multiple goals by clicking on the squares in the maze. You can also click on a selected square to remove it",
               fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Confirm goals', command=self.confirmGoals, bg='white', fg='black',
-               highlightbackground='white', height=2, width=8).place(x=40, y=60)
+               highlightbackground='white', height=2, width=15).place(x=40, y=60)
 
     def selectGoals(self, event):
         if str(event.widget) == ".maze":
@@ -320,7 +320,7 @@ class SelectWallFrame(Frame):
               fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Save', command=self.confirmWalls, bg='white',
                fg='black',
-               highlightbackground='white', height=2, width=8,  font=self.controller.font).place(x=40, y=60)
+               highlightbackground='white', height=2, width=15,  font=self.controller.font).place(x=40, y=60)
 
     def selectWalls(self, event):
         if str(event.widget) == ".maze":
@@ -350,10 +350,10 @@ class ExportFrame(Frame):
             raise Exception("Can't export maze")
         Label(controller,
               text="The maze has been successfully saved. Go back to homepage to import the maze file and start searching",
-              fg='black', bg='white', font=("calbire", 20)).place(x=40, y=20)
+              fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Homepage', command=self.returnHomepage, bg='white',
                fg='black',
-               highlightbackground='white', height=2, width=8).place(x=40, y=60)
+               highlightbackground='white', height=2, width=15).place(x=40, y=60)
 
     def returnHomepage(self):
         self.controller.clearMaze()
