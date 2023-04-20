@@ -9,6 +9,9 @@ class GreedyBestFirstSearch(InformedSearch):
         self.frontier = []
 
     def getHeuristicValue(self, node):
+        """"
+        f(n) = h(n) = Manhattan distance
+        """
         location = node.location
         values = [abs(location[0] - goal[0]) + abs(location[1] - goal[1]) for goal in self.environment.goals]
         return min(values)
@@ -16,13 +19,13 @@ class GreedyBestFirstSearch(InformedSearch):
     def search(self):
         startNode = Node(location=self.environment.start, parent=None, direction="", cost=0)
         self.frontier.append(startNode)
-        self.visited.append(startNode.location)
+        self.visited.append(startNode.location) # mark the start node as visited
         success = False
         while self.frontier:
             node = self.frontier.pop(0)
             if self.environment.isGoal(node.location):
                 success = True
-                break
+                break # stop the program when a solution is found
             yield {"finish": False, "success": False, "visited": self.visited, "frontier": [node.location for node in self.frontier]}
 
             self.expand(node)
@@ -35,14 +38,13 @@ class GreedyBestFirstSearch(InformedSearch):
             return
 
     def expand(self, node):
-        successors = self.environment.getSuccessors(node.location)
+        successors = self.environment.getSuccessors(node.location) # get its neighbour nodes
         for direction, location in successors.items():
-            if location not in self.visited:
+            if location not in self.visited: # skip the successor if it is visited
                 self.visited.append(location)
                 newNode = Node(parent=node, location=location, direction=direction, cost=node.cost + 1)
                 bisect.insort_right(a=self.frontier, x=newNode,
-                                    key=self.getHeuristicValue)  # only works in python 3.11
-
+                                    key=self.getHeuristicValue) # insert the successor into the frontier and sort the list based on the heuristic value
 
 
 

@@ -12,6 +12,9 @@ from IDASearch import  IterativeDeepeningAStarSearch
 class Robot:
     @staticmethod
     def parseFile(filename):
+        """"
+        Takes a file name and read the maze configuration
+        """
         with open(filename, 'r') as file:
             mazeSize = file.readline().strip('][ \n').split(',')
             mazeSize = [int(i) for i in mazeSize]  # convert string to integer

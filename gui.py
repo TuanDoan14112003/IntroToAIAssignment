@@ -5,12 +5,15 @@ from environment import Environment
 from wall import Wall
 
 
-def tksleep(self, time: float) -> None:
+def delay(self, time):
+    """
+    Mimic the sleep() function
+    """
     self.after(int(time * 1000), self.quit)
     self.mainloop()
 
 
-Misc.tksleep = tksleep
+Misc.tksleep = delay
 
 
 class GUI(Tk):
@@ -31,14 +34,20 @@ class GUI(Tk):
         self.path = []
 
     def switchFrame(self, Frame):
-        self.unbind("<ButtonRelease-1>")
+        """
+        Switch to another frame
+        """
+        self.unbind("<ButtonRelease-1>") # unbind the button release event
         Frame(self, bg="white", width=1280, height=200).place(x=0, y=0)
 
     def drawMaze(self):
+        """
+        Draw the maze configuration
+        """
         self.clearMaze()
 
         if self.environment:
-            self.squareSize = int(min(1280/self.environment.column,900/self.environment.row) / 2)  # calculate the good size here
+            self.squareSize = int(min(1280/self.environment.column,900/self.environment.row) / 2)  # calculate the square size according the row and column
             self.mazeCanvas = Canvas(self, bg='white', width=self.squareSize * self.environment.column + 1,
                                      height=self.squareSize * self.environment.row + 1,
                                      borderwidth=0, highlightthickness=0, name="maze")
@@ -92,6 +101,9 @@ class GUI(Tk):
             raise Exception("Haven't imported file")
 
     def clearMaze(self):
+        """
+        Clear the maze
+        """
         if self.mazeCanvas:
             if self.drawing is not None:
                 self.after_cancel(self.drawing)
@@ -100,6 +112,9 @@ class GUI(Tk):
 
 
 class HomepageFrame(Frame):
+    """
+    The homepage of the application. Has 2 button: Create maze and Import maze
+    """
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         self.controller = controller
@@ -119,6 +134,7 @@ class HomepageFrame(Frame):
 
 
 class ImportFrame(Frame):
+    """The import page that allows the user to import an existing maze configuration"""
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         self.controller = controller
@@ -142,6 +158,7 @@ class ImportFrame(Frame):
 
 
 class SearchFrame(Frame):
+    """The search page that allows the user to see the searching process in real-time"""
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         self.controller = controller
@@ -236,6 +253,7 @@ class SearchFrame(Frame):
 
 
 class SelectMazeSizeFrame(Frame):
+    """Allow the user to specify the number of row and column"""
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         self.controller = controller
@@ -261,6 +279,7 @@ class SelectMazeSizeFrame(Frame):
 
 
 class SelectStartPointFrame(Frame):
+    """Allow the user to select the start node of the maze"""
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         self.controller = controller
@@ -282,6 +301,7 @@ class SelectStartPointFrame(Frame):
 
 
 class SelectGoalsFrame(Frame):
+    """Allow the user to select the goal nodes of the maze"""
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         controller.bind("<ButtonRelease-1>", self.selectGoals)
@@ -296,8 +316,8 @@ class SelectGoalsFrame(Frame):
     def selectGoals(self, event):
         if str(event.widget) == ".maze":
             mouse_x, mouse_y = event.x, event.y
-            row = mouse_y // self.controller.squareSize
-            column = mouse_x // self.controller.squareSize
+            row = mouse_y // self.controller.squareSize # calculate the row number based on the mouse position
+            column = mouse_x // self.controller.squareSize # calculate the column number based on the mouse position
             if [column, row] in self.controller.environment.goals:
                 self.controller.environment.goals.remove([column, row])
             elif [column, row] != self.controller.environment.start:
@@ -310,6 +330,7 @@ class SelectGoalsFrame(Frame):
 
 
 class SelectWallFrame(Frame):
+    """Allow the user to select the wall squares"""
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         controller.bind("<ButtonRelease-1>", self.selectWalls)
@@ -341,6 +362,7 @@ class SelectWallFrame(Frame):
 
 
 class ExportFrame(Frame):
+    """Allow the user to export the maze configuration to a txt file"""
     def __init__(self, controller, **kwargs):
         super().__init__(master=controller, **kwargs)
         self.controller = controller
@@ -353,7 +375,7 @@ class ExportFrame(Frame):
               fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Homepage', command=self.returnHomepage, bg='white',
                fg='black',
-               highlightbackground='white', height=2, width=15).place(x=40, y=60)
+               highlightbackground='white', height=2, width=15, font=self.controller.font).place(x=40, y=60)
 
     def returnHomepage(self):
         self.controller.clearMaze()

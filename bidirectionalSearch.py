@@ -6,14 +6,17 @@ from node import Node
 class BidirectionalSearch(SearchAlgorithm):
     def __init__(self, environment):
         super().__init__(environment)
-        self.srcVisited = [[False for i in range(self.environment.column)] for j in range(self.environment.row)]
-        self.desVisited = [[False for i in range(self.environment.column)] for j in range(self.environment.row)]
-        self.srcParent = [[None for i in range(self.environment.column)] for j in range(self.environment.row)]
-        self.desParent = [[None for i in range(self.environment.column)] for j in range(self.environment.row)]
+        self.srcVisited = [[False for i in range(self.environment.column)] for j in range(self.environment.row)] # a list that store the visited nodes for the search from the start
+        self.desVisited = [[False for i in range(self.environment.column)] for j in range(self.environment.row)]# a list that store the visited nodes for the search from the destination
+        self.srcParent = [[None for i in range(self.environment.column)] for j in range(self.environment.row)] # frontier for start search
+        self.desParent = [[None for i in range(self.environment.column)] for j in range(self.environment.row)] # frontier for destination search
         self.srcFrontier = Queue()
         self.desFrontier = Queue()
 
     def getIntersectingNode(self):
+        """
+        Return the intersection if one exists
+        """
         for i in range(self.environment.row):
             for j in range(self.environment.column):
                 if self.srcVisited[i][j] and self.desVisited[i][j]:
@@ -21,6 +24,9 @@ class BidirectionalSearch(SearchAlgorithm):
         return -1
 
     def getVisited(self):
+        """
+        Return the combined visited list from both srcVisited and desVisited
+        """
         visited = []
         for i in range(self.environment.row):
             for j in range(self.environment.column):
@@ -42,7 +48,7 @@ class BidirectionalSearch(SearchAlgorithm):
             intersection = self.getIntersectingNode()
             if intersection != -1:
                 success = True
-                break
+                break # stop the loop when a solution is found
             yield {"finish": False, "success": False, "visited": self.getVisited(), "frontier": [node.location for node in self.srcFrontier.queue] + [node.location for node in self.desFrontier.queue]}
 
             self.expand(srcNode, "forward")
@@ -56,23 +62,35 @@ class BidirectionalSearch(SearchAlgorithm):
 
 
     def getPathSource(self, location):
+        """
+        Return the path from start to intersection
+        """
         if location is None:
             return []
         else:
             return self.getPathSource(self.srcParent[location[1]][location[0]]) + [location]
 
     def getPathDes(self, location):
+        """
+        Return the path from the intersection to the destination
+        """
         if location is None:
             return []
         else:
             return [location] + self.getPathDes(self.desParent[location[1]][location[0]])
 
     def getPath(self, intersection):
+        """
+        Return the path from the start to the destination
+        """
         return self.getPathSource(self.srcParent[intersection[1]][intersection[0]]) \
                + [intersection] \
                + self.getPathDes(self.desParent[intersection[1]][intersection[0]])
 
     def getDirection(self, intersection):
+        """
+        Return the sequence of moves from start to destination
+        """
         path = self.getPath(intersection)
         direction = ""
         for i in range(len(path) - 1):

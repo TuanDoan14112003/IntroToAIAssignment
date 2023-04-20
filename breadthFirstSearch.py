@@ -3,7 +3,6 @@ from queue import Queue
 from node import Node
 
 
-# QUAN TRONG: LOCATION LA LIST, KHONG PHAI TUPLE, SUA FILE PARSER
 class BreadthFirstSearch(SearchAlgorithm):
     def __init__(self, environment):
         super().__init__(environment)
@@ -12,15 +11,15 @@ class BreadthFirstSearch(SearchAlgorithm):
     def search(self):
         startNode = Node(location=self.environment.start, parent=None, direction="", cost = 0)
         self.frontier.put(startNode)
-        self.visited.append(startNode.location)
+        self.visited.append(startNode.location) # mark the start node as visited
         success = False
-        while not self.frontier.empty():
+        while not self.frontier.empty(): # stop the loop when the frontier is empty
             node = self.frontier.get()
             if self.environment.isGoal(node.location):
                 success = True
-                break
+                break # stop the program when a solution is found
             yield {"finish": False, "success": False, "visited": self.visited, "frontier": [node.location for node in self.frontier.queue]}
-            self.expand(node)
+            self.expand(node) # explore the children node
 
         if success:
             yield {"finish": True, "success": True, "direction":self.getDirection(node), "path": self.getPath(node), "numberOfNodes": node.cost}
@@ -32,6 +31,7 @@ class BreadthFirstSearch(SearchAlgorithm):
     def expand(self, node):
         successors = self.environment.getSuccessors(node.location)
         for direction, location in successors.items():
+            # skip the node if it is already visited
             if location not in self.visited:
                 newNode = Node(location=location, parent=node, direction=direction, cost = node.cost + 1)
                 self.frontier.put(newNode)

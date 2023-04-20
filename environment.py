@@ -2,15 +2,20 @@ class Environment:
     def __init__(self, row=None, column=None, start=None, goals=None, walls=None):
         self.row = row
         self.column = column
-
         self.start = start
         self.goals = goals
         self.walls = walls
 
     def isGoal(self, location):
+        """
+        Return true if the location is a goal
+        """
         return location in self.goals
 
     def isWall(self, location):
+        """
+        Return true if the location in one of the walls
+        """
         result = False
         for wall in self.walls:
             if wall.x <= location[0] < wall.x + wall.width and wall.y <= location[1] < wall.y + wall.height:
@@ -19,6 +24,9 @@ class Environment:
         return result
 
     def getSuccessors(self, location):
+        """
+        Takes a location and return its neighbour nodes
+        """
         moves = {}
         up = [location[0], location[1] - 1]
         if up[1] >= 0 and not self.isWall(up):
