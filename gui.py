@@ -20,7 +20,7 @@ class GUI(Tk):
         self.configure(bg='white')
         self.title("Search Algorithm Visualizer by Anh Tuan Doan")
         self.mazeCanvas = None
-
+        self.font = ("calibre",10)
         self.filename = None
         self.environment = None
         self.robot = None
@@ -107,9 +107,9 @@ class HomepageFrame(Frame):
                                                                                                                   y=0)
         Label(controller, text="by Anh Tuan Doan", fg='black', bg='white', font=("calibre", 15)).place(x=650, y=40)
         Button(controller, text='Create Maze', command=self.createMaze, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10).place(x=430, y=80)
+               highlightbackground='white', height=2, width=10, font=self.controller.font).place(x=430, y=80)
         Button(controller, text='Import Maze', command=self.importMaze, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10).place(x=650, y=80)
+               highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=650, y=80)
 
     def importMaze(self):
         self.controller.switchFrame(ImportFrame)
@@ -125,9 +125,9 @@ class ImportFrame(Frame):
         self.controller.filename = self.importEnvironment()
         self.controller.drawMaze()
         Label(controller, text="The maze has been imported, click on the search button to find the solution",
-              fg='black', bg='white', font=("calibre", 20)).place(x=40, y=20)
+              fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Search', command=self.goSearchFrame, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10).place(x=40, y=60)
+               highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=40, y=60)
 
     def importEnvironment(self):
         filename = askopenfilename()
@@ -147,7 +147,7 @@ class SearchFrame(Frame):
         self.controller = controller
         if not self.controller.filename is None and self.controller.environment is not None:
             Label(controller, text="Select one of the algorithms to start searching", fg='black', bg='white',
-                  font=("calibre", 20)).place(x=40, y=20)
+                  font=self.controller.font).place(x=40, y=20)
             self.algorithm = StringVar()
             self.controller = controller
             Radiobutton(controller,
@@ -200,7 +200,7 @@ class SearchFrame(Frame):
             self.legendCanvas.create_rectangle(670, 0, 670 + 30, 0 + 30,
                                                fill="yellow")
             Label(self.legendCanvas, text="Frontier: ", fg='black', bg='white', font=legendFont).place(x=730,y=12)
-            self.legendCanvas.create_rectangle(820, 0, 820 + self.controller.squareSize, 0 + self.controller.squareSize,
+            self.legendCanvas.create_rectangle(820, 0, 820 + 30, 0 + 30,
                                                fill="lightblue")
 
             self.legendCanvas.place(x=40, y=140)
@@ -226,11 +226,11 @@ class SearchFrame(Frame):
                     self.controller.path = result["path"]
                     self.solution = Label(self.controller, text=f"Path to solution: {result['direction']}", fg='black',
                                           bg='white',
-                                          font=("calibre", 20))
+                                          font=self.controller.font)
                     self.solution.place(x=40, y=90)
                 else:
                     self.solution = Label(self.controller, text=f"No solution found", fg='black', bg='white',
-                                          font=("calibre", 20))
+                                          font=self.controller.font)
                     self.solution.place(x=40, y=90)
             self.controller.tksleep(0.01)
 
@@ -243,15 +243,15 @@ class SelectMazeSizeFrame(Frame):
         self.columnVar = IntVar()
         self.controller.environment = Environment()
         Label(controller, text="How many rows and column do you want to have for your maze?", fg='black', bg='white',
-              font=("calibre", 20)).place(x=40, y=20)
-        Label(controller, text="Row", fg='black', bg='white', font=("calibre", 20)).place(x=40, y=60)
+              font=self.controller.font).place(x=40, y=20)
+        Label(controller, text="Row", fg='black', bg='white', font=self.controller.font).place(x=40, y=60)
         Entry(controller, textvariable=self.rowVar, fg='black', insertbackground='black',
               bg='white').place(x=120, y=60)
-        Label(controller, text="Column", fg='black', bg='white', font=("calibre", 20)).place(x=40, y=100)
+        Label(controller, text="Column", fg='black', bg='white', font=self.controller.font).place(x=40, y=100)
         Entry(controller, textvariable=self.columnVar, fg='black', insertbackground='black',
               bg='white').place(x=120, y=100)
         Button(controller, text='Confirm Size', command=self.confirmSize, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10).place(x=40, y=150)
+               highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=40, y=150)
 
     def confirmSize(self):
         self.controller.environment.row = self.rowVar.get()
@@ -266,9 +266,9 @@ class SelectStartPointFrame(Frame):
         self.controller = controller
         controller.bind("<ButtonRelease-1>", self.selectStartPoint)
         Label(controller, text="Select start point by clicking on a square in the maze", fg='black', bg='white',
-              font=("calibre", 20)).place(x=40, y=20)
+              font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Confirm start point', command=self.confirmStartPoint, bg='white', fg='black',
-               highlightbackground='white', height=2, width=10).place(x=40, y=60)
+               highlightbackground='white', height=2, width=10,  font=self.controller.font).place(x=40, y=60)
 
     def selectStartPoint(self, event):
         if str(event.widget) == ".maze":
@@ -289,7 +289,7 @@ class SelectGoalsFrame(Frame):
         self.controller.environment.goals = []
         Label(controller,
               text="Select multiple goals by clicking on the squares in the maze. You can also click on a selected square to remove it",
-              fg='black', bg='white', font=("calibre", 20)).place(x=40, y=20)
+              fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Confirm goals', command=self.confirmGoals, bg='white', fg='black',
                highlightbackground='white', height=2, width=8).place(x=40, y=60)
 
@@ -317,10 +317,10 @@ class SelectWallFrame(Frame):
         self.controller.environment.walls = []
         Label(controller,
               text="Select multiple walls by clicking on the squares in the maze. You can also click on a selected square to remove it",
-              fg='black', bg='white', font=("calibre", 20)).place(x=40, y=20)
+              fg='black', bg='white', font=self.controller.font).place(x=40, y=20)
         Button(controller, text='Save', command=self.confirmWalls, bg='white',
                fg='black',
-               highlightbackground='white', height=2, width=8).place(x=40, y=60)
+               highlightbackground='white', height=2, width=8,  font=self.controller.font).place(x=40, y=60)
 
     def selectWalls(self, event):
         if str(event.widget) == ".maze":
