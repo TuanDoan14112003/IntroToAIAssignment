@@ -14,7 +14,7 @@ class DepthFirstSearch(SearchAlgorithm):
         success = False
         while self.frontier:
             node = self.frontier.pop() # remove the top of the stack
-            self.visited.append(node.location)
+            self.visited.append(node.location) # mark the node as visited
             if self.environment.isGoal(node.location):
                 success = True
                 break # stop the loop when a solution is found
@@ -29,28 +29,10 @@ class DepthFirstSearch(SearchAlgorithm):
             return
 
     def expand(self, node):
-        successors = self.environment.getSuccessors(node.location)
+        successors = self.environment.getSuccessors(node.location) # explore the successor as visited
         for direction, location in reversed(successors.items()):
             if location not in self.visited: # skip the successor if it is already visited
                 newNode = Node(location=location, parent=node, direction=direction, cost =node.cost + 1)
                 self.frontier.append(newNode)
                 self.numberOfNodes += 1
 
-
-if __name__ == "__main__":
-    from environment import Environment
-    from wall import Wall
-
-    size = [5, 11]
-    start = [0, 1]
-    goal = [10, 3]
-    wall1 = Wall(2, 0, 2, 2)
-    wall2 = Wall(8, 0, 1, 2)
-    wall3 = Wall(10, 0, 1, 1)
-    wall4 = Wall(2, 3, 1, 2)
-    wall5 = Wall(3, 4, 3, 1)
-    wall6 = Wall(9, 3, 1, 1)
-    wall7 = Wall(8, 4, 2, 1)
-    env = Environment(5, 11, start, goals=[goal], walls=[wall1, wall2, wall3, wall4, wall5, wall6, wall7])
-    bfs = DepthFirstSearch(env)
-    bfs.search()

@@ -36,12 +36,12 @@ class BidirectionalSearch(SearchAlgorithm):
 
     def search(self):
         startNode = Node(location=self.environment.start, parent=None, direction="", cost = 0)
-        endNode = Node(location=self.environment.goals[0], parent=None, direction="", cost = 0)
-        self.srcFrontier.put(startNode)
-        self.desFrontier.put(endNode)
+        endNode = Node(location=self.environment.goals[0], parent=None, direction="", cost = 0) # the destination search will start at the first goal specified in the maze configuration
+        self.srcFrontier.put(startNode) # add start node to sourceFrontier
+        self.desFrontier.put(endNode) # add goal node to desFrontier
         self.numberOfNodes += 2
-        self.srcVisited[startNode.location[1]][startNode.location[0]] = True
-        self.desVisited[endNode.location[1]][endNode.location[0]] = True
+        self.srcVisited[startNode.location[1]][startNode.location[0]] = True # mark the start node as visited
+        self.desVisited[endNode.location[1]][endNode.location[0]] = True # mark the goal node as visited
         success = False
         while not self.srcFrontier.empty() and not self.desFrontier.empty():
             srcNode = self.srcFrontier.get()
@@ -52,7 +52,7 @@ class BidirectionalSearch(SearchAlgorithm):
                 break # stop the loop when a solution is found
             yield {"finish": False, "success": False, "visited": self.getVisited(), "frontier": [node.location for node in self.srcFrontier.queue] + [node.location for node in self.desFrontier.queue]}
 
-            self.expand(srcNode, "forward")
+            self.expand(srcNode, "forward") # explore the children node
             self.expand(desNode, "backward")
         if success:
             yield {"finish": True,"success": True, "path" : self.getPath(intersection), "direction" : self.getDirection(intersection), "numberOfNodes":self.numberOfNodes }
@@ -112,37 +112,20 @@ class BidirectionalSearch(SearchAlgorithm):
         return direction
 
     def expand(self, node, direction):
-        successors = self.environment.getSuccessors(node.location)
+        successors = self.environment.getSuccessors(node.location) # get the successors from the node location
         if direction == "forward":
             for action, location in successors.items():
-                if not self.srcVisited[location[1]][location[0]]:
+                if not self.srcVisited[location[1]][location[0]]: # skip the node if it is visited
                     self.srcFrontier.put(Node(location=location, parent=node, direction=action, cost = node.cost + 1))
                     self.srcVisited[location[1]][location[0]] = True
                     self.srcParent[location[1]][location[0]] = node.location
                     self.numberOfNodes += 1
         elif direction == "backward":
             for action, location in successors.items():
-                if not self.desVisited[location[1]][location[0]]:
+                if not self.desVisited[location[1]][location[0]]: # skip the node if it is visited
                     self.desFrontier.put(Node(location=location, parent=node, direction=action, cost = node.cost + 1))
                     self.desVisited[location[1]][location[0]] = True
                     self.desParent[location[1]][location[0]] = node.location
                     self.numberOfNodes += 1
 
 
-if __name__ == "__main__":
-    from environment import Environment
-    from wall import Wall
-
-    size = [5, 11]
-    start = [0, 1]
-    goal = [7, 0]
-    wall1 = Wall(2, 0, 2, 2)
-    wall2 = Wall(8, 0, 1, 2)
-    wall3 = Wall(10, 0, 1, 1)
-    wall4 = Wall(2, 3, 1, 2)
-    wall5 = Wall(3, 4, 3, 1)
-    wall6 = Wall(9, 3, 1, 1)
-    wall7 = Wall(8, 4, 2, 1)
-    env = Environment(5, 11, start, goals=[goal], walls=[wall1, wall2, wall3, wall4, wall5, wall6, wall7])
-    bfs = BidirectionalSearch(env)
-    bfs.search()
