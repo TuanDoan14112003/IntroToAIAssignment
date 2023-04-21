@@ -7,7 +7,7 @@ from wall import Wall
 
 def delay(self, time):
     """
-    Mimic the sleep() function
+    Delay program for a period of time (Source:https://stackoverflow.com/questions/10393886/tkinter-and-time-sleep)
     """
     self.after(int(time * 1000), self.quit)
     self.mainloop()

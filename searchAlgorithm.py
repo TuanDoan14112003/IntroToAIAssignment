@@ -36,7 +36,6 @@ class SearchAlgorithm(ABC):
             return parentPath + seperator + node.direction
 
 
-
     def getPath(self, node):
         if node is None:
             return []
