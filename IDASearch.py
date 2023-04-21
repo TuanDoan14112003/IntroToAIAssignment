@@ -23,6 +23,7 @@ class IterativeDeepeningAStarSearch(SearchAlgorithm):
             self.visited = []
             start = Node(location=self.environment.start,parent=None,direction="",cost=0)
             self.frontier.append(start)
+            self.numberOfNodes += 1
             if threshold is None:
                 threshold = self.getHeuristicValue(start) # initialize the threshold number to start's heuristic value
             while self.frontier:
@@ -39,7 +40,7 @@ class IterativeDeepeningAStarSearch(SearchAlgorithm):
 
                 self.expand(node)
             if success:
-                yield {"finish": True, "success": True,"path" : self.getPath(node),"direction" : self.getDirection(node), "numberOfNodes": node.cost}
+                yield {"finish": True, "success": True,"path" : self.getPath(node),"direction" : self.getDirection(node), "numberOfNodes": self.numberOfNodes}
                 return
             elif not prunedNodes: # if both the frontier and pruned list are empty then there is no solution
                 yield {"finish": True, "success": False, "message": "No solution found"}
@@ -73,6 +74,7 @@ class IterativeDeepeningAStarSearch(SearchAlgorithm):
                 continue
 
             self.frontier.append(Node(location=location, direction=direction, parent=node, cost=node.cost + 1))
+            self.numberOfNodes += 1
 
 if __name__ == "__main__":
     from environment import Environment

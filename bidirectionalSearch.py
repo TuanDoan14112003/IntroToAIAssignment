@@ -39,6 +39,7 @@ class BidirectionalSearch(SearchAlgorithm):
         endNode = Node(location=self.environment.goals[0], parent=None, direction="", cost = 0)
         self.srcFrontier.put(startNode)
         self.desFrontier.put(endNode)
+        self.numberOfNodes += 2
         self.srcVisited[startNode.location[1]][startNode.location[0]] = True
         self.desVisited[endNode.location[1]][endNode.location[0]] = True
         success = False
@@ -54,7 +55,7 @@ class BidirectionalSearch(SearchAlgorithm):
             self.expand(srcNode, "forward")
             self.expand(desNode, "backward")
         if success:
-            yield {"finish": True,"success": True, "path" : self.getPath(intersection), "direction" : self.getDirection(intersection), "numberOfNodes":len(self.getPath(intersection)) -1 }
+            yield {"finish": True,"success": True, "path" : self.getPath(intersection), "direction" : self.getDirection(intersection), "numberOfNodes":self.numberOfNodes }
             return
         else:
             yield {"finish": True,"success": False, "message": "No solution found"}
@@ -118,12 +119,14 @@ class BidirectionalSearch(SearchAlgorithm):
                     self.srcFrontier.put(Node(location=location, parent=node, direction=action, cost = node.cost + 1))
                     self.srcVisited[location[1]][location[0]] = True
                     self.srcParent[location[1]][location[0]] = node.location
+                    self.numberOfNodes += 1
         elif direction == "backward":
             for action, location in successors.items():
                 if not self.desVisited[location[1]][location[0]]:
                     self.desFrontier.put(Node(location=location, parent=node, direction=action, cost = node.cost + 1))
                     self.desVisited[location[1]][location[0]] = True
                     self.desParent[location[1]][location[0]] = node.location
+                    self.numberOfNodes += 1
 
 
 if __name__ == "__main__":

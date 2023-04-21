@@ -11,6 +11,7 @@ class BreadthFirstSearch(SearchAlgorithm):
     def search(self):
         startNode = Node(location=self.environment.start, parent=None, direction="", cost = 0)
         self.frontier.put(startNode)
+        self.numberOfNodes += 1
         self.visited.append(startNode.location) # mark the start node as visited
         success = False
         while not self.frontier.empty(): # stop the loop when the frontier is empty
@@ -22,7 +23,7 @@ class BreadthFirstSearch(SearchAlgorithm):
             self.expand(node) # explore the children node
 
         if success:
-            yield {"finish": True, "success": True, "direction":self.getDirection(node), "path": self.getPath(node), "numberOfNodes": node.cost}
+            yield {"finish": True, "success": True, "direction":self.getDirection(node), "path": self.getPath(node), "numberOfNodes": self.numberOfNodes}
             return
         else:
             yield {"finish": True, "success": False, "message": "No solution found"}
@@ -35,6 +36,7 @@ class BreadthFirstSearch(SearchAlgorithm):
             if location not in self.visited:
                 newNode = Node(location=location, parent=node, direction=direction, cost = node.cost + 1)
                 self.frontier.put(newNode)
+                self.numberOfNodes += 1
                 self.visited.append(location)
 
 

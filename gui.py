@@ -47,7 +47,7 @@ class GUI(Tk):
         self.clearMaze()
 
         if self.environment:
-            self.squareSize = int(min(1280/self.environment.column,900/self.environment.row) / 2)  # calculate the square size according the row and column
+            self.squareSize = int(min(1280//self.environment.column,900//self.environment.row) / 2)  # calculate the square size according the row and column
             self.mazeCanvas = Canvas(self, bg='white', width=self.squareSize * self.environment.column + 1,
                                      height=self.squareSize * self.environment.row + 1,
                                      borderwidth=0, highlightthickness=0, name="maze")
@@ -212,7 +212,7 @@ class SearchFrame(Frame):
                                                fill="black")
             Label(self.legendCanvas, text="Visited: ", fg='black', bg='white', font=legendFont).place(x=430,y=8)
             self.legendCanvas.create_rectangle(520, 0, 520 + 30, 0 + 30,
-                                               fill="blue")
+                                               fill="#241571")
             Label(self.legendCanvas, text="Path: ", fg='black', bg='white', font=legendFont).place(x=600,y=8)
             self.legendCanvas.create_rectangle(670, 0, 670 + 30, 0 + 30,
                                                fill="yellow")

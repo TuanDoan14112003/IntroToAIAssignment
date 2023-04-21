@@ -10,6 +10,7 @@ class DepthFirstSearch(SearchAlgorithm):
     def search(self):
         startNode = Node(location=self.environment.start, parent=None, direction="", cost=0)
         self.frontier.append(startNode)
+        self.numberOfNodes += 1
         success = False
         while self.frontier:
             node = self.frontier.pop() # remove the top of the stack
@@ -21,7 +22,7 @@ class DepthFirstSearch(SearchAlgorithm):
             self.expand(node) # explore the children nodes
 
         if success:
-            yield {"finish": True, "success": True, "direction":self.getDirection(node), "path": self.getPath(node), "numberOfNodes": node.cost}
+            yield {"finish": True, "success": True, "direction":self.getDirection(node), "path": self.getPath(node), "numberOfNodes": self.numberOfNodes}
             return
         else:
             yield {"finish": True,"success": False, "message": "No solution found"}
@@ -33,6 +34,7 @@ class DepthFirstSearch(SearchAlgorithm):
             if location not in self.visited: # skip the successor if it is already visited
                 newNode = Node(location=location, parent=node, direction=direction, cost =node.cost + 1)
                 self.frontier.append(newNode)
+                self.numberOfNodes += 1
 
 
 if __name__ == "__main__":

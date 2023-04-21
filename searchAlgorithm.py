@@ -8,6 +8,7 @@ class SearchAlgorithm(ABC):
     def __init__(self, environment):
         self.environment = environment  # the environment and its configuration (initial location, goals, walls)
         self.visited = []  # visited nodes (column first and then row)
+        self.numberOfNodes = 0 # the number of nodes in the search tree
 
     @abstractmethod
     def search(self):

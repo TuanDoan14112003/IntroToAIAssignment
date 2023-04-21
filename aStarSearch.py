@@ -19,6 +19,7 @@ class AStarSearch(InformedSearch):
     def search(self):
         startNode = Node(location=self.environment.start, parent=None, direction="", cost=0)
         self.frontier.append(startNode)
+        self.numberOfNodes += 1
         success = False
         while self.frontier:
             node = self.frontier.pop(0)
@@ -32,7 +33,7 @@ class AStarSearch(InformedSearch):
 
         if success:
             yield {"finish": True, "success": True, "path": self.getPath(node), "direction": self.getDirection(node),
-                   "numberOfNodes": node.cost}
+                   "numberOfNodes": self.numberOfNodes}
             return
         else:
             yield {"finish": True, "success": False, "message": "No solution found"}
@@ -65,6 +66,7 @@ class AStarSearch(InformedSearch):
             bisect.insort_right(a=self.frontier,
                                 x=successor,
                                 key=self.getHeuristicValue)
+            self.numberOfNodes += 1
 
 # test
 if __name__ == "__main__":

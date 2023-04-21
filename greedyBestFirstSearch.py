@@ -19,6 +19,7 @@ class GreedyBestFirstSearch(InformedSearch):
     def search(self):
         startNode = Node(location=self.environment.start, parent=None, direction="", cost=0)
         self.frontier.append(startNode)
+        self.numberOfNodes += 1
         self.visited.append(startNode.location) # mark the start node as visited
         success = False
         while self.frontier:
@@ -31,7 +32,7 @@ class GreedyBestFirstSearch(InformedSearch):
             self.expand(node)
 
         if success:
-            yield {"finish": True,"success": True, "path": self.getPath(node), "direction" : self.getDirection(node), "numberOfNodes": node.cost}
+            yield {"finish": True,"success": True, "path": self.getPath(node), "direction" : self.getDirection(node), "numberOfNodes": self.numberOfNodes}
             return
         else:
             yield {"finish": True,"success": False, "message": "No solution found"}
@@ -45,6 +46,7 @@ class GreedyBestFirstSearch(InformedSearch):
                 newNode = Node(parent=node, location=location, direction=direction, cost=node.cost + 1)
                 bisect.insort_right(a=self.frontier, x=newNode,
                                     key=self.getHeuristicValue) # insert the successor into the frontier and sort the list based on the heuristic value
+                self.numberOfNodes += 1
 
 
 
